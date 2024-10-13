@@ -18,8 +18,8 @@ function getUrlContent($url)
 {
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
     curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
     $html = curl_exec($ch);
     curl_close($ch);
@@ -35,7 +35,7 @@ function getVividSeatsTickets($url)
 {
     $html = getUrlContent($url); // Obtiene el contenido de la página
 
-    // Expresiones regulares para extraer información de sector, fila y precio
+    // Ejemplo de obtención de datos en una expresión regular, supondiendo la estructura HTML
     preg_match_all('/Section ([\w\s]+), Row (\w+), \$([\d,]+)/', $html, $matches);
 
     $tickets = [];
@@ -54,7 +54,7 @@ function getSeatGeekTickets($url)
 {
     $html = getUrlContent($url);
 
-    // Expresiones regulares para extraer datos
+    // Ejemplo de obtención de datos en una expresión regular, supondiendo la estructura HTML
     preg_match_all('/Section ([\w\s]+), Row (\w+), \$([\d,]+)/', $html, $matches);
 
     $tickets = [];
@@ -93,7 +93,7 @@ function displayTickets($tickets)
 
 // Lógica principal
 if (isset($_POST['url'])) {
-    $url = $_POST['url'];
+    $url = trim(htmlspecialchars($_POST['url'], ENT_QUOTES, 'UTF-8'));
     $platform = detectPlatform($url);
 
     if ($platform === 'vividseats') {

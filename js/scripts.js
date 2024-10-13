@@ -1,5 +1,5 @@
 document.getElementById("ticketForm").addEventListener("submit", function (event) {
-    let url = document.getElementById("url").value;
+    let url = document.getElementById("url").value.trim();
 
     // Validar si la URL comienza con "https"
     if (!url.startsWith("https")) {
